@@ -249,7 +249,7 @@ namespace DockerFileBuildHelper
                 case "docker-compose-generator":
                     dockerInfo.DockerFilePath = "docker-compose-generator/linuxamd64.Dockerfile";
                     dockerInfo.DockerFilePathARM32v7 = "docker-compose-generator/linuxarm32v7.Dockerfile";
-                    dockerInfo.GitLink = "https://github.com/btcpayserver/btcpayserver-docker";
+                    dockerInfo.GitLink = "https://github.com/bitopay/btcpayserver-docker";
                     dockerInfo.GitRef = $"dcg-latest";
                     break;
                 case "docker-bitcoingold":
@@ -340,9 +340,9 @@ namespace DockerFileBuildHelper
                     dockerInfo.GitRef = $"Dash/{image.Tag}";
                     break;
                 case "btcpayserver":
-                    dockerInfo.DockerFilePath = "Dockerfile.linuxamd64";
-                    dockerInfo.DockerFilePathARM32v7 = "Dockerfile.linuxarm32v7";
-                    dockerInfo.GitLink = "https://github.com/btcpayserver/btcpayserver";
+                    dockerInfo.DockerFilePath = "amd64.Dockerfile";
+                    dockerInfo.DockerFilePathARM32v7 = "arm32v7.Dockerfile";
+                    dockerInfo.GitLink = "https://github.com/bitopay/btcpayserver";
                     dockerInfo.GitRef = $"v{image.Tag}";
                     break;
                 case "rtl":
