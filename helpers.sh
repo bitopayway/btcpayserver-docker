@@ -34,7 +34,7 @@ install_tooling() {
 
         [ -e /usr/local/bin/$scriptname ] && rm /usr/local/bin/$scriptname
         if [ -e "$scriptname" ]; then
-            if [ "$dependency" == "*" ] || grep -q "$dependency" "$BTCPAY_DOCKER_COMPOSE"; then
+            if [ "$dependency" == "*" ] || ( [ -e "$BTCPAY_DOCKER_COMPOSE" ] && grep -q "$dependency" "$BTCPAY_DOCKER_COMPOSE" ); then
                 chmod +x $scriptname
                 ln -s "$(pwd)/$scriptname" /usr/local/bin
                 echo "Installed $scriptname to /usr/local/bin: $comment"
@@ -70,6 +70,7 @@ touch $BTCPAY_ENV_FILE
 echo "
 BTCPAY_PROTOCOL=$BTCPAY_PROTOCOL
 BTCPAY_HOST=$BTCPAY_HOST
+BTCPAY_ADDITIONAL_HOSTS=$BTCPAY_ADDITIONAL_HOSTS
 BTCPAY_ANNOUNCEABLE_HOST=$BTCPAY_ANNOUNCEABLE_HOST
 REVERSEPROXY_HTTP_PORT=$REVERSEPROXY_HTTP_PORT
 REVERSEPROXY_HTTPS_PORT=$REVERSEPROXY_HTTPS_PORT
@@ -95,6 +96,13 @@ btcpay_up() {
     if ! [ $? -eq 0 ]; then
         docker-compose -f $BTCPAY_DOCKER_COMPOSE up --remove-orphans -d
     fi
+    popd > /dev/null
+}
+
+btcpay_pull() {
+    pushd . > /dev/null
+    cd "$(dirname "$BTCPAY_ENV_FILE")"
+    docker-compose -f "$BTCPAY_DOCKER_COMPOSE" pull
     popd > /dev/null
 }
 
